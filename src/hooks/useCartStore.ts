@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { DataClient } from "@/context/wixContext";
+import { DataClient } from "@/context/dataContext";
 
 type CartItem = {
   _id: string;
@@ -31,9 +31,10 @@ type CartState = {
 
 export const useCartStore = create<CartState>((set) => ({
   cart: { lineItems: [] },
-  isLoading: true,
+  isLoading: false,
   counter: 0,
   getCart: async (dataClient) => {
+    set((state) => ({ ...state, isLoading: true }));
     try {
       const cart = dataClient.getCart();
       set({

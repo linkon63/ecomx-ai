@@ -1,0 +1,111 @@
+[
+  {
+    "_id": "order_1",
+    "number": "ORD-001",
+    "buyerInfo": {
+      "email": "john.doe@example.com",
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "billingInfo": {
+      "address": {
+        "street": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001",
+        "country": "USA"
+      }
+    },
+    "shippingInfo": {
+      "address": {
+        "street": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001",
+        "country": "USA"
+      }
+    },
+    "lineItems": [
+      {
+        "productId": "1",
+        "productName": "Classic White T-Shirt",
+        "quantity": 2,
+        "price": 24.99,
+        "totalPrice": 49.98,
+        "options": {
+          "Size": "M",
+          "Color": "white"
+        }
+      }
+    ],
+    "totals": {
+      "subtotal": 49.98,
+      "shipping": 5.99,
+      "tax": 4.50,
+      "total": 60.47
+    },
+    "paymentStatus": "PAID",
+    "fulfillmentStatus": "FULFILLED",
+    "dateCreated": "2024-01-15T10:30:00Z"
+  },
+  {
+    "_id": "order_2",
+    "number": "ORD-002",
+    "buyerInfo": {
+      "email": "jane.smith@example.com",
+      "firstName": "Jane",
+      "lastName": "Smith"
+    },
+    "billingInfo": {
+      "address": {
+        "street": "456 Oak Ave",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zipCode": "90210",
+        "country": "USA"
+      }
+    },
+    "shippingInfo": {
+      "address": {
+        "street": "456 Oak Ave",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zipCode": "90210",
+        "country": "USA"
+      }
+    },
+    "lineItems": [
+      {
+        "productId": "2",
+        "productName": "Denim Jeans",
+        "quantity": 1,
+        "price": 59.99,
+        "totalPrice": 59.99,
+        "options": {
+          "Size": "32",
+          "Color": "blue"
+        }
+      },
+      {
+        "productId": "5",
+        "productName": "Running Shoes",
+        "quantity": 1,
+        "price": 99.99,
+        "totalPrice": 99.99,
+        "options": {
+          "Size": "9",
+          "Color": "white"
+        }
+      }
+    ],
+    "totals": {
+      "subtotal": 159.98,
+      "shipping": 7.99,
+      "tax": 13.44,
+      "total": 181.41
+    },
+    "paymentStatus": "PAID",
+    "fulfillmentStatus": "NOT_FULFILLED",
+    "dateCreated": "2024-01-20T14:45:00Z"
+  }
+]

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCartStore } from "@/hooks/useCartStore";
-import { useDataClient } from "@/hooks/useWixClient";
+import { useDataClient } from "@/hooks/useDataClient";
 
 const CartModal = () => {
   const dataClient = useDataClient();

@@ -3,13 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { DataClientContextProvider } from "@/context/wixContext";
+import { DataClientContextProvider } from "@/context/dataContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lama Dev E-Commerce Application",
-  description: "A complete e-commerce application with Next.js and Wix",
+  title: "Shoesx",
+  description: "A complete e-commerce application with Next.js",
 };
 
 export default function RootLayout({

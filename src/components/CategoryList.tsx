@@ -1,11 +1,9 @@
-import { dataClientServer } from "@/lib/wixClientServer";
+import { dataService } from "@/lib/dataService";
 import Image from "next/image";
 import Link from "next/link";
 
 const CategoryList = async () => {
-  const dataClient = await dataClientServer();
-
-  const cats = await dataClient.getCategories();
+  const cats = await dataService.getCategories();
 
   return (
     <div className="px-4 overflow-x-scroll scrollbar-hide">

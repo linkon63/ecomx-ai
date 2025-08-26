@@ -1,7 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/hooks/useCartStore";
-import { useDataClient } from "@/hooks/useWixClient";
+import { useDataClient } from "@/hooks/useDataClient";
 import { useState } from "react";
 
 const Add = ({

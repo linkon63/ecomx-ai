@@ -1,0 +1,67 @@
+[
+  {
+    "_id": "1",
+    "name": "All Products",
+    "slug": "all-products",
+    "description": "Browse all our products",
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/category.png"
+        }
+      }
+    }
+  },
+  {
+    "_id": "2",
+    "name": "Clothing",
+    "slug": "clothing",
+    "description": "Fashionable clothing for all occasions",
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/category.png"
+        }
+      }
+    }
+  },
+  {
+    "_id": "3",
+    "name": "Accessories",
+    "slug": "accessories",
+    "description": "Complete your look with our accessories",
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/discover.png"
+        }
+      }
+    }
+  },
+  {
+    "_id": "4",
+    "name": "Women",
+    "slug": "women",
+    "description": "Women's fashion collection",
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/category.png"
+        }
+      }
+    }
+  },
+  {
+    "_id": "5",
+    "name": "Shoes",
+    "slug": "shoes",
+    "description": "Comfortable and stylish footwear",
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/cart.png"
+        }
+      }
+    }
+  }
+]

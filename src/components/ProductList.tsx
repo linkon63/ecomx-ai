@@ -1,5 +1,4 @@
-import { dataClientServer } from "@/lib/wixClientServer";
-import { Product, Product } from "@/lib/dataService";
+import { dataService, Product } from "@/lib/dataService";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
@@ -16,21 +15,20 @@ const ProductList = async ({
   limit?: number;
   searchParams?: any;
 }) => {
-  const dataClient = await dataClientServer();
 
   let products: Product[] = [];
   
   if (searchParams?.name) {
     // Search products by name
-    const searchResult = await dataClient.searchProducts(searchParams.name);
+    const searchResult = await dataService.searchProducts(searchParams.name);
     products = searchResult.items;
   } else if (categoryId === "1") {
     // All products
-    const result = await dataClient.getProducts(limit);
+    const result = await dataService.getProducts(limit);
     products = result.items;
   } else {
     // Products by category
-    const result = await dataClient.getProductsByCategory(categoryId, limit);
+    const result = await dataService.getProductsByCategory(categoryId, limit);
     products = result.items;
   }
 

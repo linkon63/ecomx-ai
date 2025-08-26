@@ -1,16 +1,13 @@
-import { wixClientServer } from "@/lib/wixClientServer";
+import { dataService } from "@/lib/dataService";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const OrderPage = async ({ params }: { params: { id: string } }) => {
   const id = params.id;
 
-  const wixClient = await wixClientServer();
-
-  let order;
-  try {
-    order = await wixClient.orders.getOrder(id);
-  } catch (err) {
+  const order = await dataService.getOrderById(id);
+  
+  if (!order) {
     return notFound();
   }
 
@@ -26,8 +23,8 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
         <div className="">
           <span className="font-medium">Receiver Name: </span>
           <span>
-            {order.billingInfo?.contactDetails?.firstName + " "}
-            {order.billingInfo?.contactDetails?.lastName}
+            {order.buyerInfo?.firstName + " "}
+            {order.buyerInfo?.lastName}
           </span>
         </div>
         <div className="">
@@ -36,7 +33,7 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
         </div>
         <div className="">
           <span className="font-medium">Price: </span>
-          <span>{order.priceSummary?.subtotal?.amount}</span>
+          <span>${order.totals?.total}</span>
         </div>
         <div className="">
           <span className="font-medium">Payment Status: </span>
@@ -44,12 +41,12 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
         </div>
         <div className="">
           <span className="font-medium">Order Status: </span>
-          <span>{order.status}</span>
+          <span>{order.fulfillmentStatus}</span>
         </div>
         <div className="">
           <span className="font-medium">Delivery Address: </span>
           <span>
-            {order.billingInfo?.address?.addressLine1 + " "}
+            {order.billingInfo?.address?.street + " "}
             {order.billingInfo?.address?.city}
           </span>
         </div>

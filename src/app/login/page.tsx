@@ -1,9 +1,6 @@
 "use client";
 
-import { useWixClient } from "@/hooks/useWixClient";
-import { LoginState } from "@wix/sdk";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { useState } from "react";
 
 enum MODE {
@@ -14,10 +11,10 @@ enum MODE {
 }
 
 const LoginPage = () => {
-  const wixClient = useWixClient();
   const router = useRouter();
 
-  const isLoggedIn = wixClient.auth.loggedIn();
+  // No authentication needed for fake data approach
+  const isLoggedIn = false;
 
   if (isLoggedIn) {
     router.push("/");
@@ -57,68 +54,41 @@ const LoginPage = () => {
     setError("");
 
     try {
-      let response;
+      // Simulate authentication for demo purposes
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       switch (mode) {
         case MODE.LOGIN:
-          response = await wixClient.auth.login({
-            email,
-            password,
-          });
+          if (email && password) {
+            setMessage("Login successful! Redirecting...");
+            setTimeout(() => router.push("/"), 1000);
+          } else {
+            setError("Please enter email and password!");
+          }
           break;
         case MODE.REGISTER:
-          response = await wixClient.auth.register({
-            email,
-            password,
-            profile: { nickname: username },
-          });
+          if (email && password && username) {
+            setMessage("Registration successful! You can now login.");
+            setMode(MODE.LOGIN);
+          } else {
+            setError("Please fill all fields!");
+          }
           break;
         case MODE.RESET_PASSWORD:
-          response = await wixClient.auth.sendPasswordResetEmail(
-            email,
-            window.location.href
-          );
-          setMessage("Password reset email sent. Please check your e-mail.");
+          if (email) {
+            setMessage("Password reset email sent. Please check your e-mail.");
+          } else {
+            setError("Please enter your email!");
+          }
           break;
         case MODE.EMAIL_VERIFICATION:
-          response = await wixClient.auth.processVerification({
-            verificationCode: emailCode,
-          });
-          break;
-        default:
-          break;
-      }
-
-      switch (response?.loginState) {
-        case LoginState.SUCCESS:
-          setMessage("Successful! You are being redirected.");
-          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-            response.data.sessionToken!
-          );
-
-          Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
-            expires: 2,
-          });
-          wixClient.auth.setTokens(tokens);
-          router.push("/");
-          break;
-        case LoginState.FAILURE:
-          if (
-            response.errorCode === "invalidEmail" ||
-            response.errorCode === "invalidPassword"
-          ) {
-            setError("Invalid email or password!");
-          } else if (response.errorCode === "emailAlreadyExists") {
-            setError("Email already exists!");
-          } else if (response.errorCode === "resetPassword") {
-            setError("You need to reset your password!");
+          if (emailCode) {
+            setMessage("Email verified successfully!");
+            setMode(MODE.LOGIN);
           } else {
-            setError("Something went wrong!");
+            setError("Please enter verification code!");
           }
-        case LoginState.EMAIL_VERIFICATION_REQUIRED:
-          setMode(MODE.EMAIL_VERIFICATION);
-        case LoginState.OWNER_APPROVAL_REQUIRED:
-          setMessage("Your account is pending approval");
+          break;
         default:
           break;
       }

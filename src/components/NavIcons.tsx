@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CartModal from "./CartModal";
-import { useDataClient } from "@/hooks/useWixClient";
+import { useDataClient } from "@/hooks/useDataClient";
 import { useCartStore } from "@/hooks/useCartStore";
 
 const NavIcons = () => {

@@ -1,0 +1,242 @@
+[
+  {
+    "_id": "1",
+    "name": "Classic White T-Shirt",
+    "slug": "classic-white-tshirt",
+    "description": "A comfortable and versatile white t-shirt made from 100% cotton.",
+    "price": {
+      "price": 29.99,
+      "discountedPrice": 24.99
+    },
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/cart.png"
+        }
+      },
+      "items": [
+        {
+          "image": {
+            "url": "/cart.png"
+          }
+        }
+      ]
+    },
+    "productOptions": [
+      {
+        "name": "Size",
+        "choices": [
+          { "value": "S", "description": "Small" },
+          { "value": "M", "description": "Medium" },
+          { "value": "L", "description": "Large" },
+          { "value": "XL", "description": "Extra Large" }
+        ]
+      },
+      {
+        "name": "Color",
+        "choices": [
+          { "value": "white", "description": "White" },
+          { "value": "black", "description": "Black" },
+          { "value": "gray", "description": "Gray" }
+        ]
+      }
+    ],
+    "stock": {
+      "inStock": true,
+      "quantity": 50
+    },
+    "collections": ["1", "2"]
+  },
+  {
+    "_id": "2",
+    "name": "Denim Jeans",
+    "slug": "denim-jeans",
+    "description": "Premium quality denim jeans with a modern fit.",
+    "price": {
+      "price": 79.99,
+      "discountedPrice": 59.99
+    },
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/category.png"
+        }
+      },
+      "items": [
+        {
+          "image": {
+            "url": "/category.png"
+          }
+        }
+      ]
+    },
+    "productOptions": [
+      {
+        "name": "Size",
+        "choices": [
+          { "value": "28", "description": "28" },
+          { "value": "30", "description": "30" },
+          { "value": "32", "description": "32" },
+          { "value": "34", "description": "34" },
+          { "value": "36", "description": "36" }
+        ]
+      },
+      {
+        "name": "Color",
+        "choices": [
+          { "value": "blue", "description": "Blue" },
+          { "value": "black", "description": "Black" },
+          { "value": "gray", "description": "Gray" }
+        ]
+      }
+    ],
+    "stock": {
+      "inStock": true,
+      "quantity": 25
+    },
+    "collections": ["1", "3"]
+  },
+  {
+    "_id": "3",
+    "name": "Summer Dress",
+    "slug": "summer-dress",
+    "description": "Light and airy summer dress perfect for warm weather.",
+    "price": {
+      "price": 89.99,
+      "discountedPrice": 69.99
+    },
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/discover.png"
+        }
+      },
+      "items": [
+        {
+          "image": {
+            "url": "/discover.png"
+          }
+        }
+      ]
+    },
+    "productOptions": [
+      {
+        "name": "Size",
+        "choices": [
+          { "value": "XS", "description": "Extra Small" },
+          { "value": "S", "description": "Small" },
+          { "value": "M", "description": "Medium" },
+          { "value": "L", "description": "Large" }
+        ]
+      },
+      {
+        "name": "Color",
+        "choices": [
+          { "value": "floral", "description": "Floral Print" },
+          { "value": "solid", "description": "Solid Color" }
+        ]
+      }
+    ],
+    "stock": {
+      "inStock": true,
+      "quantity": 15
+    },
+    "collections": ["2", "4"]
+  },
+  {
+    "_id": "4",
+    "name": "Leather Jacket",
+    "slug": "leather-jacket",
+    "description": "Genuine leather jacket with a classic design.",
+    "price": {
+      "price": 199.99,
+      "discountedPrice": 149.99
+    },
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/facebook.png"
+        }
+      },
+      "items": [
+        {
+          "image": {
+            "url": "/facebook.png"
+          }
+        }
+      ]
+    },
+    "productOptions": [
+      {
+        "name": "Size",
+        "choices": [
+          { "value": "S", "description": "Small" },
+          { "value": "M", "description": "Medium" },
+          { "value": "L", "description": "Large" },
+          { "value": "XL", "description": "Extra Large" }
+        ]
+      },
+      {
+        "name": "Color",
+        "choices": [
+          { "value": "black", "description": "Black" },
+          { "value": "brown", "description": "Brown" }
+        ]
+      }
+    ],
+    "stock": {
+      "inStock": true,
+      "quantity": 8
+    },
+    "collections": ["1", "3"]
+  },
+  {
+    "_id": "5",
+    "name": "Running Shoes",
+    "slug": "running-shoes",
+    "description": "Comfortable running shoes with excellent cushioning.",
+    "price": {
+      "price": 129.99,
+      "discountedPrice": 99.99
+    },
+    "media": {
+      "mainMedia": {
+        "image": {
+          "url": "/cart.png"
+        }
+      },
+      "items": [
+        {
+          "image": {
+            "url": "/cart.png"
+          }
+        }
+      ]
+    },
+    "productOptions": [
+      {
+        "name": "Size",
+        "choices": [
+          { "value": "7", "description": "7" },
+          { "value": "8", "description": "8" },
+          { "value": "9", "description": "9" },
+          { "value": "10", "description": "10" },
+          { "value": "11", "description": "11" }
+        ]
+      },
+      {
+        "name": "Color",
+        "choices": [
+          { "value": "white", "description": "White" },
+          { "value": "black", "description": "Black" },
+          { "value": "blue", "description": "Blue" }
+        ]
+      }
+    ],
+    "stock": {
+      "inStock": true,
+      "quantity": 30
+    },
+    "collections": ["3", "5"]
+  }
+]

@@ -1,10 +1,8 @@
 "use server";
 
-import { wixClientServer } from "./wixClientServer";
+import { dataService } from "./dataService";
 
 export const updateUser = async (formData: FormData) => {
-  const wixClient = await wixClientServer();
-
   const id = formData.get("id") as string;
   const username = formData.get("username") as string;
   const firstName = formData.get("firstName") as string;
@@ -15,18 +13,21 @@ export const updateUser = async (formData: FormData) => {
   console.log(username)
 
   try {
-    const response = await wixClient.members.updateMember(id, {
-      contact: {
-        firstName: firstName || undefined,
-        lastName: lastName || undefined,
-        phones: [phone] || undefined,
-      },
-      loginEmail: email || undefined,
-      profile: { nickname: username || undefined },
+    // In a real app, this would update the user in the database
+    // For now, we'll just log the update since we're using fake data
+    console.log("User update request:", {
+      id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      username
     });
-
-    console.log(response)
+    
+    // Simulate successful update
+    return { success: true };
   } catch (err) {
     console.log(err);
+    return { success: false, error: err };
   }
 };

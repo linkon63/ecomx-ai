@@ -1,8 +1,25 @@
 "use client";
 
-import { products } from "@wix/stores";
 import { useEffect, useState } from "react";
 import Add from "./Add";
+import { Product } from "@/lib/dataService";
+
+interface ProductVariant {
+  _id: string;
+  choices?: { [key: string]: string };
+  stock?: {
+    inStock: boolean;
+    quantity: number;
+  };
+}
+
+interface ProductOption {
+  name: string;
+  choices?: Array<{
+    value: string;
+    description: string;
+  }>;
+}
 
 const CustomizeProducts = ({
   productId,
@@ -10,13 +27,13 @@ const CustomizeProducts = ({
   productOptions,
 }: {
   productId: string;
-  variants: products.Variant[];
-  productOptions: products.ProductOption[];
+  variants: ProductVariant[];
+  productOptions: ProductOption[];
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: string]: string;
   }>({});
-  const [selectedVariant, setSelectedVariant] = useState<products.Variant>();
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant>();
 
   useEffect(() => {
     const variant = variants.find((v) => {
@@ -111,9 +128,7 @@ const CustomizeProducts = ({
       ))}
       <Add
         productId={productId}
-        variantId={
-          selectedVariant?._id || "00000000-0000-0000-0000-000000000000"
-        }
+        productOptions={selectedOptions}
         stockNumber={selectedVariant?.stock?.quantity || 0}
       />
       {/* COLOR */}

@@ -1,67 +1,71 @@
 import { create } from "zustand";
-import { currentCart } from "@wix/ecom";
-import { WixClient } from "@/context/wixContext";
+import { DataClient } from "@/context/wixContext";
+
+type CartItem = {
+  _id: string;
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  options: Record<string, string>;
+  image: string;
+};
+
+type Cart = {
+  lineItems: CartItem[];
+};
 
 type CartState = {
-  cart: currentCart.Cart;
+  cart: Cart;
   isLoading: boolean;
   counter: number;
-  getCart: (wixClient: WixClient) => void;
+  getCart: (dataClient: DataClient) => void;
   addItem: (
-    wixClient: WixClient,
+    dataClient: DataClient,
     productId: string,
-    variantId: string,
-    quantity: number
+    quantity: number,
+    options: Record<string, string>
   ) => void;
-  removeItem: (wixClient: WixClient, itemId: string) => void;
+  removeItem: (dataClient: DataClient, itemId: string) => void;
 };
 
 export const useCartStore = create<CartState>((set) => ({
-  cart: [],
+  cart: { lineItems: [] },
   isLoading: true,
   counter: 0,
-  getCart: async (wixClient) => {
+  getCart: async (dataClient) => {
     try {
-      const cart = await wixClient.currentCart.getCurrentCart();
+      const cart = dataClient.getCart();
       set({
-        cart: cart || [],
+        cart: cart || { lineItems: [] },
         isLoading: false,
-        counter: cart?.lineItems.length || 0,
+        counter: cart?.lineItems?.length || 0,
       });
     } catch (err) {
       set((prev) => ({ ...prev, isLoading: false }));
     }
   },
-  addItem: async (wixClient, productId, variantId, quantity) => {
+  addItem: async (dataClient, productId, quantity, options) => {
     set((state) => ({ ...state, isLoading: true }));
-    const response = await wixClient.currentCart.addToCurrentCart({
-      lineItems: [
-        {
-          catalogReference: {
-            appId: process.env.NEXT_PUBLIC_WIX_APP_ID!,
-            catalogItemId: productId,
-            ...(variantId && { options: { variantId } }),
-          },
-          quantity: quantity,
-        },
-      ],
-    });
+    
+    dataClient.addToCart(productId, quantity, options);
+    const updatedCart = dataClient.getCart();
 
     set({
-      cart: response.cart,
-      counter: response.cart?.lineItems.length,
+      cart: updatedCart,
+      counter: updatedCart?.lineItems?.length || 0,
       isLoading: false,
     });
   },
-  removeItem: async (wixClient, itemId) => {
+  removeItem: async (dataClient, itemId) => {
     set((state) => ({ ...state, isLoading: true }));
-    const response = await wixClient.currentCart.removeLineItemsFromCurrentCart(
-      [itemId]
-    );
+    
+    dataClient.removeFromCart(itemId);
+    const updatedCart = dataClient.getCart();
 
     set({
-      cart: response.cart,
-      counter: response.cart?.lineItems.length,
+      cart: updatedCart,
+      counter: updatedCart?.lineItems?.length || 0,
       isLoading: false,
     });
   },

@@ -5,8 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CartModal from "./CartModal";
-import { useWixClient } from "@/hooks/useWixClient";
-import Cookies from "js-cookie";
+import { useDataClient } from "@/hooks/useWixClient";
 import { useCartStore } from "@/hooks/useCartStore";
 
 const NavIcons = () => {
@@ -17,8 +16,8 @@ const NavIcons = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const wixClient = useWixClient();
-  const isLoggedIn = wixClient.auth.loggedIn();
+  const dataClient = useDataClient();
+  const isLoggedIn = false; // No authentication needed for fake data
 
   // TEMPORARY
   // const isLoggedIn = false;
@@ -31,37 +30,21 @@ const NavIcons = () => {
     }
   };
 
-  // AUTH WITH WIX-MANAGED AUTH
-
-  // const wixClient = useWixClient();
-
-  // const login = async () => {
-  //   const loginRequestData = wixClient.auth.generateOAuthData(
-  //     "http://localhost:3000"
-  //   );
-
-  //   console.log(loginRequestData);
-
-  //   localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
-  //   const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
-  //   window.location.href = authUrl;
-  // };
+  // No authentication needed for fake data approach
 
   const handleLogout = async () => {
     setIsLoading(true);
-    Cookies.remove("refreshToken");
-    const { logoutUrl } = await wixClient.auth.logout(window.location.href);
+    // No logout needed for fake data
     setIsLoading(false);
     setIsProfileOpen(false);
-    router.push(logoutUrl);
+    router.push("/");
   };
-
 
   const { cart, counter, getCart } = useCartStore();
 
   useEffect(() => {
-    getCart(wixClient);
-  }, [wixClient, getCart]);
+    getCart(dataClient);
+  }, [dataClient, getCart]);
 
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">

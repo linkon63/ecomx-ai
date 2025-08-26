@@ -1,22 +1,19 @@
 "use client";
 
 import { useCartStore } from "@/hooks/useCartStore";
-import { useWixClient } from "@/hooks/useWixClient";
+import { useDataClient } from "@/hooks/useWixClient";
 import { useState } from "react";
 
 const Add = ({
   productId,
-  variantId,
+  productOptions,
   stockNumber,
 }: {
   productId: string;
-  variantId: string;
+  productOptions?: Record<string, string>;
   stockNumber: number;
 }) => {
   const [quantity, setQuantity] = useState(1);
-
-  // // TEMPORARY
-  // const stock = 4;
 
   const handleQuantity = (type: "i" | "d") => {
     if (type === "d" && quantity > 1) {
@@ -27,8 +24,7 @@ const Add = ({
     }
   };
 
-  const wixClient = useWixClient();
-
+  const dataClient = useDataClient();
   const { addItem, isLoading } = useCartStore();
 
   return (
@@ -64,7 +60,7 @@ const Add = ({
           )}
         </div>
         <button
-          onClick={() => addItem(wixClient, productId, variantId, quantity)}
+          onClick={() => addItem(dataClient, productId, quantity, productOptions || {})}
           disabled={isLoading}
           className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
         >

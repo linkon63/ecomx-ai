@@ -1,8 +1,11 @@
 "use client";
 
-import { WixClientContext } from "@/context/wixContext";
+import { DataClientContext } from "@/context/wixContext";
 import { useContext } from "react";
 
-export const useWixClient = () => {
-  return useContext(WixClientContext);
+export const useDataClient = () => {
+  return useContext(DataClientContext);
 };
+
+// Keep the old name for backward compatibility
+export const useWixClient = useDataClient;

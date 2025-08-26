@@ -1,11 +1,11 @@
-import { wixClientServer } from "@/lib/wixClientServer";
+import { dataClientServer } from "@/lib/wixClientServer";
 import Image from "next/image";
 import Link from "next/link";
 
 const CategoryList = async () => {
-  const wixClient = await wixClientServer();
+  const dataClient = await dataClientServer();
 
-  const cats = await wixClient.collections.queryCollections().find();
+  const cats = await dataClient.getCategories();
 
   return (
     <div className="px-4 overflow-x-scroll scrollbar-hide">

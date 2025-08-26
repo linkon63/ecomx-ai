@@ -1,42 +1,20 @@
 "use client";
 
-import { createClient, OAuthStrategy } from "@wix/sdk";
-import { products, collections } from "@wix/stores";
-import { currentCart } from "@wix/ecom";
-import Cookies from "js-cookie";
 import { createContext, ReactNode } from "react";
-import { redirects } from '@wix/redirects';
+import { dataService } from "@/lib/dataService";
 
-const refreshToken = JSON.parse(Cookies.get("refreshToken") || "{}");
+export type DataClient = typeof dataService;
 
-const wixClient = createClient({
-  modules: {
-    products,
-    collections,
-    currentCart,
-    redirects
-  },
-  auth: OAuthStrategy({
-    clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
-    tokens: {
-      refreshToken,
-      accessToken: { value: "", expiresAt: 0 },
-    },
-  }),
-});
+export const DataClientContext = createContext<DataClient>(dataService);
 
-export type WixClient = typeof wixClient;
-
-export const WixClientContext = createContext<WixClient>(wixClient);
-
-export const WixClientContextProvider = ({
+export const DataClientContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
   return (
-    <WixClientContext.Provider value={wixClient}>
+    <DataClientContext.Provider value={dataService}>
       {children}
-    </WixClientContext.Provider>
+    </DataClientContext.Provider>
   );
 };

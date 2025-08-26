@@ -4,9 +4,9 @@ import CategoryList from "@/components/CategoryList";
 import ProductList from "@/components/ProductList";
 import Skeleton from "@/components/Skeleton";
 import Slider from "@/components/Slider";
-import { WixClientContext } from "@/context/wixContext";
-import { useWixClient } from "@/hooks/useWixClient";
-import { wixClientServer } from "@/lib/wixClientServer";
+import { DataClientContext } from "@/context/wixContext";
+import { useDataClient } from "@/hooks/useWixClient";
+import { dataClientServer } from "@/lib/wixClientServer";
 import { Suspense, useContext, useEffect } from "react";
 
 const HomePage = async () => {
@@ -41,7 +41,7 @@ const HomePage = async () => {
         <h1 className="text-2xl">Featured Products</h1>
         <Suspense fallback={<Skeleton />}>
           <ProductList
-            categoryId={process.env.FEATURED_PRODUCTS_FEATURED_CATEGORY_ID!}
+            categoryId="1"
             limit={4}
           />
         </Suspense>
@@ -58,7 +58,7 @@ const HomePage = async () => {
         <h1 className="text-2xl">New Products</h1>
         <Suspense fallback={<Skeleton />}>
           <ProductList
-            categoryId={process.env.FEATURED_PRODUCTS_NEW_CATEGORY_ID!}
+            categoryId="2"
             limit={4}
           />
         </Suspense>

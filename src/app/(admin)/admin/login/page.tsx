@@ -21,12 +21,39 @@ const AdminLogin = () => {
     setLoading(true);
     setError("");
 
-    // Demo authentication - in real app, this would be API call
-    if (credentials.email === "admin@shoex.com" && credentials.password === "admin123") {
-      localStorage.setItem("adminToken", "demo-admin-token");
-      router.push("/admin/dashboard");
-    } else {
-      setError("Invalid credentials. Use admin@shoex.com / admin123");
+    try {
+      console.log('Attempting login with:', credentials);
+      
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      console.log('Response status:', response.status);
+      
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (response.ok) {
+        // Store token in localStorage for client-side access
+        localStorage.setItem("adminToken", data.token);
+        console.log('Token stored, redirecting to dashboard...');
+        
+        // Small delay to ensure cookie is set
+        setTimeout(() => {
+          console.log('Attempting navigation to dashboard...');
+          router.push("/admin/dashboard");
+        }, 100);
+      } else {
+        console.error('Login failed:', data);
+        setError(data.error || "Login failed");
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      setError("Network error. Please try again.");
     }
     setLoading(false);
   };

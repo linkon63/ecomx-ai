@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: shoex-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: shoex_db
+      POSTGRES_USER: shoex_user
+      POSTGRES_PASSWORD: shoex_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shoex-network
+
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shoex-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://shoex_user:shoex_password@postgres:5432/shoex_db"
+      NEXTAUTH_SECRET: "your-nextauth-secret-key"
+      NEXTAUTH_URL: "http://localhost:3000"
+      JWT_SECRET: "your-jwt-secret-key"
+      NODE_ENV: "production"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - shoex-network
+    command: >
+      sh -c "
+        echo 'Waiting for postgres...' &&
+        sleep 10 &&
+        npx prisma migrate deploy &&
+        npx prisma db seed &&
+        npm start
+      "
+
+  # Redis (for session storage - optional)
+  redis:
+    image: redis:7-alpine
+    container_name: shoex-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - shoex-network
+
+volumes:
+  postgres_data:
+
+networks:
+  shoex-network:
+    driver: bridge

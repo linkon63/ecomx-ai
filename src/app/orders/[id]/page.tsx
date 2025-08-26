@@ -2,8 +2,8 @@ import { dataService } from "@/lib/dataService";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-const OrderPage = async ({ params }: { params: { id: string } }) => {
-  const id = params.id;
+const OrderDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   const order = await dataService.getOrderById(id);
   
@@ -59,4 +59,4 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default OrderPage;
+export default OrderDetailsPage;

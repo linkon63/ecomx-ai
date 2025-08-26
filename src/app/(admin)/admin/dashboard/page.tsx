@@ -1,9 +1,11 @@
 "use client";
 
+import React from 'react';
+import Link from 'next/link';
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { dataService } from "@/lib/dataService";
+import { apiClient } from "@/lib/api";
 import { 
   Package, 
   ShoppingCart, 
@@ -35,30 +37,31 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      console.log('Fetching dashboard data...');
       try {
         const [products, orders, categories] = await Promise.all([
-          dataService.getProducts(),
-          dataService.getOrders(),
-          dataService.getCategories()
+          apiClient.getProducts({ limit: 100 }),
+          apiClient.getOrders({ limit: 100 }),
+          apiClient.getCategories({ limit: 100 })
         ]);
 
-        const totalRevenue = orders.items.reduce((sum: number, order: any) => 
-          sum + order.totals.total, 0
+        const totalRevenue = orders.orders.reduce((sum: number, order: any) => 
+          sum + order.totalAmount, 0
         );
 
-        const lowStockProducts = products.items.filter((product: any) => 
-          product.stock.quantity < 10
+        const lowStockProducts = products.products.filter((product: any) => 
+          product.stockQuantity < 10
         );
 
-        const recentOrders = orders.items
-          .sort((a: any, b: any) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
+        const recentOrders = orders.orders
+          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 5);
 
         setStats({
-          totalProducts: products.items.length,
-          totalOrders: orders.items.length,
+          totalProducts: products.products.length,
+          totalOrders: orders.orders.length,
           totalRevenue,
-          totalCategories: categories.items.length,
+          totalCategories: categories.categories.length,
           recentOrders,
           lowStockProducts
         });
@@ -168,17 +171,17 @@ const AdminDashboard = () => {
           <CardContent>
             <div className="space-y-4">
               {stats.recentOrders.map((order) => (
-                <div key={order._id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <p className="font-medium">Order #{order.number}</p>
+                    <p className="font-medium">Order #{order.orderNumber}</p>
                     <p className="text-sm text-gray-600">
-                      {new Date(order.dateCreated).toLocaleDateString()}
+                      {new Date(order.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">${order.totals.total.toFixed(2)}</p>
+                    <p className="font-medium">${order.totalAmount.toFixed(2)}</p>
                     <Badge variant={
-                      order.status === "FULFILLED" ? "default" : 
+                      order.status === "DELIVERED" ? "default" : 
                       order.status === "PENDING" ? "secondary" : "destructive"
                     }>
                       {order.status}
@@ -207,14 +210,14 @@ const AdminDashboard = () => {
           <CardContent>
             <div className="space-y-4">
               {stats.lowStockProducts.slice(0, 5).map((product) => (
-                <div key={product._id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div key={product.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <p className="font-medium">{product.name}</p>
-                    <p className="text-sm text-gray-600">SKU: {product._id}</p>
+                    <p className="text-sm text-gray-600">SKU: {product.sku || product.id}</p>
                   </div>
                   <div className="text-right">
                     <Badge variant="destructive">
-                      {product.stock.quantity} left
+                      {product.stockQuantity} left
                     </Badge>
                   </div>
                 </div>
@@ -237,30 +240,30 @@ const AdminDashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a 
+            <Link 
               href="/admin/products" 
               className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
             >
               <Package className="h-8 w-8 text-blue-600 mb-2" />
               <h3 className="font-medium">Manage Products</h3>
               <p className="text-sm text-gray-600">Add, edit, or remove products</p>
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/admin/categories" 
               className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
             >
               <Users className="h-8 w-8 text-green-600 mb-2" />
               <h3 className="font-medium">Manage Categories</h3>
               <p className="text-sm text-gray-600">Organize product categories</p>
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/admin/orders" 
               className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
             >
               <ShoppingCart className="h-8 w-8 text-purple-600 mb-2" />
               <h3 className="font-medium">View Orders</h3>
               <p className="text-sm text-gray-600">Process customer orders</p>
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>

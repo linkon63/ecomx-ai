@@ -6,8 +6,9 @@ import { dataService } from "@/lib/dataService";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-const SinglePage = async ({ params }: { params: { slug: string } }) => {
-  const product = await dataService.getProductBySlug(params.slug);
+const SinglePage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+  const product = await dataService.getProductBySlug(slug);
 
   if (!product) {
     return notFound();
